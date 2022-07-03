@@ -3,14 +3,16 @@ using BackendChallenge.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BackendChallenge.Migrations
 {
     [DbContext(typeof(DataBaseContext))]
-    partial class DataBaseContextModelSnapshot : ModelSnapshot
+    [Migration("20220702201038_ModeloUbicacion13")]
+    partial class ModeloUbicacion13
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,12 +47,16 @@ namespace BackendChallenge.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("VehiculoId")
+                    b.Property<string>("VehiculoId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("VehiculoId1")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("VehiculoId");
+                    b.HasIndex("VehiculoId1");
 
                     b.ToTable("Historiales");
                 });
@@ -105,7 +111,7 @@ namespace BackendChallenge.Migrations
                 {
                     b.HasOne("BackendChallenge.Models.Vehiculo", "Vehiculo")
                         .WithMany("Historiales")
-                        .HasForeignKey("VehiculoId")
+                        .HasForeignKey("VehiculoId1")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BackendChallenge.Migrations
 {
     [DbContext(typeof(DataBaseContext))]
-    [Migration("20220630111908_AgregarTablasDbRelaciones")]
-    partial class AgregarTablasDbRelaciones
+    [Migration("20220702191745_ModeloUbicacion10")]
+    partial class ModeloUbicacion10
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -36,6 +36,18 @@ namespace BackendChallenge.Migrations
                     b.ToTable("Clientes");
                 });
 
+            modelBuilder.Entity("BackendChallenge.Models.Historial", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Historiales");
+                });
+
             modelBuilder.Entity("BackendChallenge.Models.Pedido", b =>
                 {
                     b.Property<int>("Id")
@@ -46,11 +58,9 @@ namespace BackendChallenge.Migrations
                     b.Property<int>("ClienteId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Id_Cliente")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Id_Vehiculo")
-                        .HasColumnType("int");
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("VehiculoId")
                         .HasColumnType("int");
@@ -62,6 +72,33 @@ namespace BackendChallenge.Migrations
                     b.HasIndex("VehiculoId");
 
                     b.ToTable("Pedidos");
+                });
+
+            modelBuilder.Entity("BackendChallenge.Models.Ubicacion", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Direccion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("HistorialId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("VehiculoId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HistorialId");
+
+                    b.HasIndex("VehiculoId")
+                        .IsUnique();
+
+                    b.ToTable("Ubicaciones");
                 });
 
             modelBuilder.Entity("BackendChallenge.Models.Vehiculo", b =>
@@ -82,15 +119,30 @@ namespace BackendChallenge.Migrations
 
             modelBuilder.Entity("BackendChallenge.Models.Pedido", b =>
                 {
-                    b.HasOne("BackendChallenge.Models.Cliente", "Cliente")
-                        .WithMany()
+                    b.HasOne("BackendChallenge.Models.Cliente", null)
+                        .WithMany("Pedidos")
                         .HasForeignKey("ClienteId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("BackendChallenge.Models.Vehiculo", "Vehiculo")
-                        .WithMany()
+                    b.HasOne("BackendChallenge.Models.Vehiculo", null)
+                        .WithMany("Pedidos")
                         .HasForeignKey("VehiculoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("BackendChallenge.Models.Ubicacion", b =>
+                {
+                    b.HasOne("BackendChallenge.Models.Historial", null)
+                        .WithMany("Ubicaciones")
+                        .HasForeignKey("HistorialId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BackendChallenge.Models.Vehiculo", null)
+                        .WithOne("UbicacionId")
+                        .HasForeignKey("BackendChallenge.Models.Ubicacion", "VehiculoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

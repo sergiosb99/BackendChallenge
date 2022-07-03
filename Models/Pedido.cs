@@ -12,19 +12,18 @@ namespace BackendChallenge.Models
         public int Id { get; set; }
 
         [Required]
-        public virtual string Descripcion { get; set; }
+        public string Descripcion { get; set; }
 
         [Required]
-        public virtual Cliente Cliente { get; set; }
-
-        //[Required]
-        //public int Id_Cliente { get; set; }
+        public int ClienteId { get; set; }
 
         [Required]
-        public virtual Vehiculo Vehiculo { get; set; }
+        public int VehiculoId { get; set; }
 
-        //[Required]
-        //public int Id_Vehiculo { get; set; }
+        [Required]
+        public Cliente Cliente { get; set; }
 
+        [Required]
+        public Vehiculo Vehiculo { get; set; }
     }
 }

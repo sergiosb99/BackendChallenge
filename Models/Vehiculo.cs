@@ -16,5 +16,11 @@ namespace BackendChallenge.Models
 
         [Required]
         public string Ubicacion { get; set; }
+
+        [Required]
+        public virtual List<Pedido> Pedidos { get; set; }
+
+        [Required]
+        public virtual List<Historial> Historiales { get; set; }
     }
 }

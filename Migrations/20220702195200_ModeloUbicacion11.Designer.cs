@@ -3,14 +3,16 @@ using BackendChallenge.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BackendChallenge.Migrations
 {
     [DbContext(typeof(DataBaseContext))]
-    partial class DataBaseContextModelSnapshot : ModelSnapshot
+    [Migration("20220702195200_ModeloUbicacion11")]
+    partial class ModeloUbicacion11
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,12 +47,11 @@ namespace BackendChallenge.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("VehiculoId")
-                        .HasColumnType("int");
+                    b.Property<string>("VehiculoId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("VehiculoId");
 
                     b.ToTable("Historiales");
                 });
@@ -101,24 +102,15 @@ namespace BackendChallenge.Migrations
                     b.ToTable("Vehiculos");
                 });
 
-            modelBuilder.Entity("BackendChallenge.Models.Historial", b =>
-                {
-                    b.HasOne("BackendChallenge.Models.Vehiculo", "Vehiculo")
-                        .WithMany("Historiales")
-                        .HasForeignKey("VehiculoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("BackendChallenge.Models.Pedido", b =>
                 {
-                    b.HasOne("BackendChallenge.Models.Cliente", "Cliente")
+                    b.HasOne("BackendChallenge.Models.Cliente", null)
                         .WithMany("Pedidos")
                         .HasForeignKey("ClienteId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("BackendChallenge.Models.Vehiculo", "Vehiculo")
+                    b.HasOne("BackendChallenge.Models.Vehiculo", null)
                         .WithMany("Pedidos")
                         .HasForeignKey("VehiculoId")
                         .OnDelete(DeleteBehavior.Cascade)

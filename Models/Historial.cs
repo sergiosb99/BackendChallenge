@@ -6,12 +6,18 @@ using System.Threading.Tasks;
 
 namespace BackendChallenge.Models
 {
-    public class HistorialVehiculo
+    public class Historial
     {
         [Key]
-        public virtual Vehiculo Vehiculo { get; set; }
+        public int Id { get; set; }
+
+        [Required]
+        public int VehiculoId { get; set; }
 
         [Required]
         public string Ubicacion { get; set; }
+
+        [Required]
+        public Vehiculo Vehiculo { get; set; }
     }
 }

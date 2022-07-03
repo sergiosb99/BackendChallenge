@@ -61,15 +61,6 @@ namespace BackendChallenge.Controllers
             catch (DbUpdateConcurrencyException)
             {
                 return NotFound();
-                /*
-                if (!ClienteExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }*/
             }
 
             return NoContent();

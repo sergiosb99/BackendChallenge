@@ -12,6 +12,9 @@ namespace BackendChallenge.Models
         public int Id { get; set; }
 
         [Required]
-        public String Nombre { get; set; }
+        public string Nombre { get; set; }
+
+        [Required]
+        public List<Pedido> Pedidos { get; set; }
     }
 }

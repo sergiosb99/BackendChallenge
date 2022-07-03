@@ -19,5 +19,7 @@ namespace BackendChallenge.Data
         public DbSet<Pedido> Pedidos { get; set; }
 
         public DbSet<Vehiculo> Vehiculos { get; set; }
+
+        public DbSet<Historial> Historiales { get; set; }
     }
 }

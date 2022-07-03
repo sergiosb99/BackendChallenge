@@ -12,11 +12,11 @@ namespace BackendChallenge.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PedidoController : ControllerBase
+    public class PedidosController : ControllerBase
     {
         private readonly DataBaseContext _context;
 
-        public PedidoController(DataBaseContext context)
+        public PedidosController(DataBaseContext context)
         {
             _context = context;
         }
@@ -61,15 +61,6 @@ namespace BackendChallenge.Controllers
             catch (DbUpdateConcurrencyException)
             {
                 return NotFound();
-                /*
-                if (!PedidoExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }*/
             }
 
             return NoContent();

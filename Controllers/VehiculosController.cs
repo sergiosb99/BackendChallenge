@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BackendChallenge.Data;
 using BackendChallenge.Models;
+using System.Diagnostics;
 
 namespace BackendChallenge.Controllers
 {
@@ -61,16 +62,27 @@ namespace BackendChallenge.Controllers
             catch (DbUpdateConcurrencyException)
             {
                 return NotFound();
-                /*
-                if (!VehiculoExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }*/
             }
+
+            return NoContent();
+        }
+
+        // PUT: api/Vehiculos/Ubicacion/{id}/{new_ubi}
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPut("Ubicacion/{id}/{new_ubi}")]
+        public async Task<IActionResult> PutVehiculoUbicacion(int id, string new_ubi)
+        {
+            var Vehiculos = _context.Vehiculos;
+            Debug.Write("Hooooooooooola");
+            foreach (Vehiculo v in Vehiculos)
+            {
+                Debug.Write("Hooooooooooola");
+                Debug.Write(v.Id);
+                if (v.Id == id) {
+                    v.Ubicacion = new_ubi;
+                }
+            }
+            await _context.SaveChangesAsync();
 
             return NoContent();
         }

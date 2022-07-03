@@ -3,14 +3,16 @@ using BackendChallenge.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BackendChallenge.Migrations
 {
     [DbContext(typeof(DataBaseContext))]
-    partial class DataBaseContextModelSnapshot : ModelSnapshot
+    [Migration("20220702131240_ModeloUbicacion5")]
+    partial class ModeloUbicacion5
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -32,27 +34,6 @@ namespace BackendChallenge.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Clientes");
-                });
-
-            modelBuilder.Entity("BackendChallenge.Models.Historial", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Ubicacion")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("VehiculoId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("VehiculoId");
-
-                    b.ToTable("Historiales");
                 });
 
             modelBuilder.Entity("BackendChallenge.Models.Pedido", b =>
@@ -81,6 +62,25 @@ namespace BackendChallenge.Migrations
                     b.ToTable("Pedidos");
                 });
 
+            modelBuilder.Entity("BackendChallenge.Models.Ubicacion", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Direccion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("VehiculoId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Ubicaciones");
+                });
+
             modelBuilder.Entity("BackendChallenge.Models.Vehiculo", b =>
                 {
                     b.Property<int>("Id")
@@ -92,7 +92,7 @@ namespace BackendChallenge.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Ubicacion")
+                    b.Property<string>("UbicacionId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -101,24 +101,15 @@ namespace BackendChallenge.Migrations
                     b.ToTable("Vehiculos");
                 });
 
-            modelBuilder.Entity("BackendChallenge.Models.Historial", b =>
-                {
-                    b.HasOne("BackendChallenge.Models.Vehiculo", "Vehiculo")
-                        .WithMany("Historiales")
-                        .HasForeignKey("VehiculoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("BackendChallenge.Models.Pedido", b =>
                 {
-                    b.HasOne("BackendChallenge.Models.Cliente", "Cliente")
+                    b.HasOne("BackendChallenge.Models.Cliente", null)
                         .WithMany("Pedidos")
                         .HasForeignKey("ClienteId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("BackendChallenge.Models.Vehiculo", "Vehiculo")
+                    b.HasOne("BackendChallenge.Models.Vehiculo", null)
                         .WithMany("Pedidos")
                         .HasForeignKey("VehiculoId")
                         .OnDelete(DeleteBehavior.Cascade)
